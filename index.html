@@ -4,447 +4,435 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rekvizitlar</title>
+    <title>Azizbek Tojiboyev — Rekvizitlar</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Asosiy shrift va to'q ko'k/siyohrang gradient fon */
-        body {
-            font-family: 'Inter', sans-serif;
-            background: radial-gradient(circle at top left, #1e1b4b, #0f172a 60%, #020617);
-            color: #f8fafc;
-            overflow-x: hidden;
+        /* Ko'zni charchatmaydigan yumshoq moviy-kulrang va yorug' shisha uslubi */
+        * {
+            box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #334155 0%, #3b4d6b 45%, #475569 100%);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
             user-select: none;
         }
 
-        /* Orqa fondagi mayin yorug'lik effektlari */
-        .bg-orb {
+        /* Orqa fondagi mayin, ko'zga yoqimli yorug'lik sharlari */
+        .ambient-light {
             position: fixed;
             border-radius: 50%;
-            filter: blur(85px);
-            z-index: 0;
-            opacity: 0.4;
+            filter: blur(90px);
             pointer-events: none;
-            animation: floatOrb 12s ease-in-out infinite alternate;
+            z-index: 0;
         }
 
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(25px, -25px) scale(1.08); }
+        /* Asosiy shaffof karta (Frosted Glass) - To'liq, keng va chiroyli tashqi ramka bilan */
+        .main-glass {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 2px solid rgba(255, 255, 255, 0.35); /* Chiroyli oq ramka liniyasi */
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.4);
+            border-radius: 36px; /* Silliq burchaklar */
+            width: 100%;
+            max-width: 580px;  /* Kengroq ekran */
+            min-height: 560px; /* Uzunroq korinish */
         }
 
-        /* Glassmorphism asosiy oyna */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.045);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65);
+        /* Ichki silliq kataklar */
+        .smooth-box {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 22px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Silliq qirrali rekvizit kataklari */
-        .req-card {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .req-card:hover {
-            background: rgba(255, 255, 255, 0.11);
-            border-color: rgba(255, 255, 255, 0.2);
+        .smooth-box-interactive:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.35);
             transform: translateY(-2px);
         }
 
-        .req-card:active {
-            transform: scale(0.98);
-            background: rgba(255, 255, 255, 0.16);
+        .smooth-box-interactive:active {
+            transform: scale(0.985);
+            background: rgba(255, 255, 255, 0.24);
         }
 
-        /* Sahifa almashish animatsiyalari */
-        .slide-enter-right {
-            animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        /* Yanada silliq va mayin sahifa almashish animatsiyalari */
+        .fade-slide-next {
+            animation: slideNext 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .slide-enter-left {
-            animation: slideInLeft 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .fade-slide-prev {
+            animation: slidePrev 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(22px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .fade-in-tab {
+            animation: fadeInTab 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-22px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        @keyframes slideNext {
+            from { opacity: 0; transform: translateX(35px) scale(0.98); }
+            to { opacity: 1; transform: translateX(0) scale(1); }
         }
 
-        /* Pastki Toast xabarnoma animatsiyasi */
-        .toast-show {
+        @keyframes slidePrev {
+            from { opacity: 0; transform: translateX(-35px) scale(0.98); }
+            to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(10px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Toast xabarnoma holati */
+        .toast-visible {
             opacity: 1 !important;
             transform: translate(-50%, 0) !important;
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 relative">
+<body class="p-4 sm:p-6">
 
-    <!-- Fondagi dekorativ yorug'lik sharlari -->
-    <div class="bg-orb w-72 h-72 bg-indigo-600 top-[-40px] left-[-40px]"></div>
-    <div class="bg-orb w-80 h-80 bg-purple-700 bottom-[-60px] right-[-40px]" style="animation-delay: -6s;"></div>
+    <!-- Fondagi yumshoq rangli yog'dular -->
+    <div class="ambient-light w-80 h-80 bg-sky-300/40 -top-16 -left-16"></div>
+    <div class="ambient-light w-96 h-96 bg-indigo-300/35 -bottom-20 -right-16"></div>
 
-    <!-- Pastki Toast xabarnomasi -->
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-4 opacity-0 pointer-events-none z-50 transition-all duration-300 bg-emerald-500/95 backdrop-blur-md text-white px-4 py-2.5 rounded-2xl shadow-xl border border-emerald-400/30 flex items-center gap-2 text-sm font-medium whitespace-nowrap">
-        <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
-        </svg>
-        <span id="toast-text">Nusxalandi!</span>
+    <!-- Nusxalanganlik haqida pastki xabarnoma (Toast) -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-4 opacity-0 pointer-events-none z-50 transition-all duration-300 bg-white text-slate-800 px-6 py-3 rounded-full shadow-2xl flex items-center gap-2.5 text-sm font-semibold whitespace-nowrap">
+        <span class="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs">✓</span>
+        <span id="toast-msg">Nusxalandi!</span>
     </div>
 
-    <!-- Asosiy App Konteyneri (Swipe qo'llab-quvvatlaydi) -->
-    <main id="app-wrapper" class="glass-panel w-full max-w-md rounded-3xl p-6 relative z-10 flex flex-col justify-between min-h-[490px]">
+    <!-- Ekran markazidagi asosiy keng karta -->
+    <main id="app-card" class="main-glass p-6 sm:p-8 relative z-10 flex flex-col justify-between mx-auto">
         
-        <!-- Yuqori qism: Minimalistik sarlavha -->
+        <!-- Yuqori qism: Eng tepa chap burchakda ism-familiya -->
         <div>
-            <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center shadow-md border border-white/20">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h1 class="text-base font-bold text-white leading-tight">Azizbek Tojiboyev</h1>
-                        <p class="text-xs text-indigo-300/80 mt-0.5">To'lov rekvizitlari</p>
-                    </div>
-                </div>
-                <span id="page-badge" class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-indigo-200 border border-white/10">
-                    1 / 3
-                </span>
-            </div>
+            <header class="flex items-center justify-start pb-4 mb-6 border-b border-white/20">
+                <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white pl-0.5">Azizbek Tojiboyev</h1>
+            </header>
 
-            <!-- Sahifa kontenti konteyneri -->
-            <div id="cards-container" class="space-y-3">
-                <!-- JavaScript orqali to'ldiriladi -->
-            </div>
+            <!-- Sahifa kontenti -->
+            <section id="page-content" class="w-full">
+                <!-- JavaScript orqali dinamik yuklanadi -->
+            </section>
         </div>
 
-        <!-- Pastki navigatsiya paneli -->
-        <div class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between relative h-12">
+        <!-- Pastki navigatsiya: Chap strelka, 3 ta kichik doira, O'ng strelka -->
+        <footer class="pt-6 mt-6 border-t border-white/20 flex items-center justify-between relative h-14">
             
-            <!-- Chap tarafdagi ko'rsatkich (Avvalgi sahifa) -->
-            <button id="prev-btn" aria-label="Avvalgi sahifa" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/15 flex items-center justify-center text-white transition-all duration-200 shadow-md">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <!-- Chapga (avvalgi sahifaga) silliq ko'rsatkich -->
+            <button id="btn-prev" type="button" aria-label="Avvalgi sahifa" class="w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 active:scale-95 border border-white/30 flex items-center justify-center text-white transition-all duration-200 shadow-sm cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
                 </svg>
             </button>
 
-            <!-- Markazdagi sahifa indikator doirachalari -->
-            <div id="dots-container" class="flex items-center gap-2.5 absolute left-1/2 -translate-x-1/2">
-                <!-- Doirachalar JS orqali chiziladi -->
+            <!-- Markazdagi 3 ta kichik doira -->
+            <div id="dots-wrapper" class="flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
+                <!-- Doiralar JS orqali chiziladi -->
             </div>
 
-            <!-- O'ng tarafdagi ko'rsatkich (Keyingi sahifa) -->
-            <button id="next-btn" aria-label="Keyingi sahifa" class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/15 flex items-center justify-center text-white transition-all duration-200 shadow-md">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <!-- O'ngga (keyingi sahifaga) silliq ko'rsatkich -->
+            <button id="btn-next" type="button" aria-label="Keyingi sahifa" class="w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 active:scale-95 border border-white/30 flex items-center justify-center text-white transition-all duration-200 shadow-sm cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
                 </svg>
             </button>
 
-        </div>
+        </footer>
     </main>
 
-    <!-- Nusxalash uchun yashirin textarea -->
-    <textarea id="copy-helper" class="fixed -top-96 opacity-0 pointer-events-none" readonly></textarea>
+    <!-- Nusxalash uchun yordamchi maydon -->
+    <textarea id="clipboard-helper" class="fixed -top-96 opacity-0 pointer-events-none" readonly></textarea>
 
     <script>
-        // 3 ta sahifa ma'lumotlari
-        const pagesData = [
-            {
-                type: 'welcome'
-            },
-            {
-                type: 'cards',
-                tabs: {
-                    uzcard: [
-                        { label: "Karta raqami (Uzcard)", value: "5614 6865 0712 1112", copyValue: "5614686507121112" },
-                        { label: "Karta egasi", value: "AZIZBEK TOJIBOYEV", copyValue: "AZIZBEK TOJIBOYEV" }
-                    ],
-                    humo: [
-                        { label: "Karta raqami (Humo)", value: "9860 1966 1905 8718", copyValue: "9860196619058718" },
-                        { label: "Karta egasi", value: "AZIZBEK TOJIBOYEV", copyValue: "AZIZBEK TOJIBOYEV" }
-                    ]
-                }
-            },
-            {
-                type: 'thanks'
-            }
-        ];
+        // Sahifalar tuzilmasi
+        const totalPages = 3;
+        let currentPage = 0; // 0 = 1-sahifa, 1 = 2-sahifa, 2 = 3-sahifa
+        let activeTab = 'uzcard'; // 2-sahifadagi faol karta turi
+        let toastTimer = null;
 
-        let currentPage = 0;
-        let activeCardTab = 'uzcard'; // 2-sahifadagi faol bo'lim (uzcard yoki humo)
-        let toastTimeout = null;
+        // Karta ma'lumotlari (faqat karta raqami va egasi)
+        const cardsData = {
+            uzcard: [
+                {
+                    label: "Karta raqami",
+                    display: "5614 6865 0712 1112",
+                    copyValue: "5614686507121112"
+                },
+                {
+                    label: "Karta egasi",
+                    display: "Azizbek Tojiboyev",
+                    copyValue: "Azizbek Tojiboyev"
+                }
+            ],
+            humo: [
+                {
+                    label: "Karta raqami",
+                    display: "9860 1966 1905 8718",
+                    copyValue: "9860196619058718"
+                },
+                {
+                    label: "Karta egasi",
+                    display: "Azizbek Tojiboyev",
+                    copyValue: "Azizbek Tojiboyev"
+                }
+            ]
+        };
 
         // DOM elementlari
-        const pageBadgeEl = document.getElementById('page-badge');
-        const cardsContainerEl = document.getElementById('cards-container');
-        const dotsContainerEl = document.getElementById('dots-container');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const appWrapper = document.getElementById('app-wrapper');
+        const pageContentEl = document.getElementById('page-content');
+        const dotsWrapperEl = document.getElementById('dots-wrapper');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const appCard = document.getElementById('app-card');
         const toastEl = document.getElementById('toast');
-        const toastTextEl = document.getElementById('toast-text');
-        const copyHelperEl = document.getElementById('copy-helper');
+        const toastMsgEl = document.getElementById('toast-msg');
+        const clipboardHelper = document.getElementById('clipboard-helper');
 
         // Toast xabarnomasini ko'rsatish
-        function showToast(message) {
-            toastTextEl.textContent = message;
-            toastEl.classList.add('toast-show');
-            if (toastTimeout) clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toastEl.classList.remove('toast-show');
-            }, 2200);
+        function triggerToast(text) {
+            toastMsgEl.textContent = text;
+            toastEl.classList.add('toast-visible');
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toastEl.classList.remove('toast-visible');
+            }, 2000);
         }
 
         // Nusxalash funksiyasi
-        function copyToClipboard(text, label) {
-            copyHelperEl.value = text;
-            copyHelperEl.select();
-            copyHelperEl.setSelectionRange(0, 99999);
+        function copyText(value, label) {
+            clipboardHelper.value = value;
+            clipboardHelper.select();
+            clipboardHelper.setSelectionRange(0, 99999);
             try {
                 document.execCommand('copy');
-                showToast(`${label} nusxalandi!`);
+                triggerToast(`${label} nusxalandi!`);
             } catch (err) {
-                showToast('Nusxalashda xatolik yuz berdi');
+                triggerToast('Nusxalashda xatolik');
             }
             window.getSelection().removeAllRanges();
         }
 
-        // 2-sahifa ichidagi Uzcard / Humo kartalarini chizish
-        function renderCardItems(container, items) {
+        // 2-sahifa ichidagi karta kataklarini chizish
+        function renderCardBoxes(container, items) {
             container.innerHTML = '';
             items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'req-card p-4 cursor-pointer flex items-center justify-between group';
-                card.innerHTML = `
-                    <div class="pr-3">
-                        <div class="text-[11px] font-medium uppercase tracking-wider text-indigo-300/80 mb-1">${item.label}</div>
-                        <div class="text-[15px] font-semibold text-white break-all">${item.value}</div>
+                const box = document.createElement('div');
+                box.className = 'smooth-box smooth-box-interactive p-4 cursor-pointer flex items-center justify-between gap-3';
+                box.innerHTML = `
+                    <div>
+                        <div class="text-xs font-medium text-white/75 mb-1">${item.label}</div>
+                        <div class="text-base sm:text-[17px] font-semibold text-white tracking-wide">${item.display}</div>
                     </div>
-                    <div class="w-9 h-9 rounded-xl bg-white/5 group-hover:bg-white/15 flex items-center justify-center text-slate-300 group-hover:text-white transition-colors shrink-0">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <div class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-white shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <rect x="9" y="9" width="13" height="13" rx="3" ry="3"></rect>
                             <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
                         </svg>
                     </div>
                 `;
-                card.addEventListener('click', () => copyToClipboard(item.copyValue, item.label));
-                container.appendChild(card);
+                box.addEventListener('click', () => copyText(item.copyValue, item.label));
+                container.appendChild(box);
             });
         }
 
-        // Sahifani chizish funksiyasi
-        function renderPage(direction = 'none') {
-            const page = pagesData[currentPage];
+        // Asosiy sahifani yangilash
+        function renderCurrentPage(direction = 'none') {
+            pageContentEl.classList.remove('fade-slide-next', 'fade-slide-prev');
+            void pageContentEl.offsetWidth;
 
-            // Sahifa raqamini yangilash
-            pageBadgeEl.textContent = `${currentPage + 1} / ${pagesData.length}`;
-
-            // Sahifa almashish animatsiyasi
-            cardsContainerEl.classList.remove('slide-enter-right', 'slide-enter-left');
-            void cardsContainerEl.offsetWidth;
             if (direction === 'next') {
-                cardsContainerEl.classList.add('slide-enter-right');
+                pageContentEl.classList.add('fade-slide-next');
             } else if (direction === 'prev') {
-                cardsContainerEl.classList.add('slide-enter-left');
+                pageContentEl.classList.add('fade-slide-prev');
             }
 
-            cardsContainerEl.innerHTML = '';
+            pageContentEl.innerHTML = '';
 
             // 1-SAHIFA: Salomlashish
-            if (page.type === 'welcome') {
-                cardsContainerEl.innerHTML = `
-                    <div class="req-card p-6 text-center flex flex-col items-center justify-center min-h-[250px] space-y-4">
-                        <div class="w-14 h-14 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-2xl shadow-inner">
+            if (currentPage === 0) {
+                pageContentEl.innerHTML = `
+                    <div class="smooth-box p-8 sm:p-10 text-center flex flex-col items-center justify-center min-h-[280px] space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-3xl shadow-md">
                             👋
                         </div>
-                        <h2 class="text-xl font-bold text-white tracking-tight">Assalomu alaykum!</h2>
-                        <p class="text-sm text-slate-300 leading-relaxed">
-                            Sizni ko'rib turganimizdan va sahifamizga tashrif buyurganingizdan juda xursandmiz! Keyingi sahifada to'lov rekvizitlarini topishingiz mumkin.
+                        <h2 class="text-xl sm:text-2xl font-bold text-white">Assalomu alaykum! Xush kelibsiz!</h2>
+                        <p class="text-sm sm:text-base text-white/90 leading-relaxed max-w-md">
+                            Sizni ko'rib turganimizdan va sahifamizga tashrif buyurganingizdan juda xursandmiz. Keyingi sahifada to'lov ma'lumotlari joylashgan.
                         </p>
                     </div>
                 `;
-            } 
-            // 2-SAHIFA: Tepada Uzcard va Humo tanlovi + tegishli karta raqami va egasi
-            else if (page.type === 'cards') {
-                const tabsWrapper = document.createElement('div');
-                tabsWrapper.className = 'grid grid-cols-2 gap-2 p-1.5 rounded-2xl bg-white/5 border border-white/10 mb-4';
+            }
+            // 2-SAHIFA: Uzcard va Humo tanlovi hamda karta ma'lumotlari
+            else if (currentPage === 1) {
+                const tabHeader = document.createElement('div');
+                tabHeader.className = 'grid grid-cols-2 gap-2 p-1.5 rounded-2xl bg-white/10 border border-white/20 mb-5';
 
-                const uzcardBtn = document.createElement('button');
-                uzcardBtn.textContent = 'Uzcard';
-                uzcardBtn.className = `py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                    activeCardTab === 'uzcard'
-                        ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/30'
-                        : 'text-slate-300 hover:text-white hover:bg-white/5'
+                const uzcardTabBtn = document.createElement('button');
+                uzcardTabBtn.type = 'button';
+                uzcardTabBtn.textContent = 'Uzcard';
+                uzcardTabBtn.className = `py-3 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer ${
+                    activeTab === 'uzcard'
+                        ? 'bg-white text-slate-800 shadow-md'
+                        : 'text-white/85 hover:text-white hover:bg-white/10'
                 }`;
 
-                const humoBtn = document.createElement('button');
-                humoBtn.textContent = 'Humo';
-                humoBtn.className = `py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                    activeCardTab === 'humo'
-                        ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/30'
-                        : 'text-slate-300 hover:text-white hover:bg-white/5'
+                const humoTabBtn = document.createElement('button');
+                humoTabBtn.type = 'button';
+                humoTabBtn.textContent = 'Humo';
+                humoTabBtn.className = `py-3 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer ${
+                    activeTab === 'humo'
+                        ? 'bg-white text-slate-800 shadow-md'
+                        : 'text-white/85 hover:text-white hover:bg-white/10'
                 }`;
 
-                const itemsListEl = document.createElement('div');
-                itemsListEl.className = 'space-y-3';
+                const boxesContainer = document.createElement('div');
+                boxesContainer.className = 'space-y-3.5 fade-in-tab';
 
-                uzcardBtn.addEventListener('click', () => {
-                    if (activeCardTab !== 'uzcard') {
-                        activeCardTab = 'uzcard';
-                        renderPage('none');
+                uzcardTabBtn.addEventListener('click', () => {
+                    if (activeTab !== 'uzcard') {
+                        activeTab = 'uzcard';
+                        renderCurrentPage('none');
                     }
                 });
 
-                humoBtn.addEventListener('click', () => {
-                    if (activeCardTab !== 'humo') {
-                        activeCardTab = 'humo';
-                        renderPage('none');
+                humoTabBtn.addEventListener('click', () => {
+                    if (activeTab !== 'humo') {
+                        activeTab = 'humo';
+                        renderCurrentPage('none');
                     }
                 });
 
-                tabsWrapper.appendChild(uzcardBtn);
-                tabsWrapper.appendChild(humoBtn);
-                cardsContainerEl.appendChild(tabsWrapper);
-                cardsContainerEl.appendChild(itemsListEl);
+                tabHeader.appendChild(uzcardTabBtn);
+                tabHeader.appendChild(humoTabBtn);
+                pageContentEl.appendChild(tabHeader);
+                pageContentEl.appendChild(boxesContainer);
 
-                renderCardItems(itemsListEl, page.tabs[activeCardTab]);
-            } 
-            // 3-SAHIFA: E'tibori uchun rahmat
-            else if (page.type === 'thanks') {
-                cardsContainerEl.innerHTML = `
-                    <div class="req-card p-6 text-center flex flex-col items-center justify-center min-h-[250px] space-y-4">
-                        <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-2xl shadow-inner">
+                renderCardBoxes(boxesContainer, cardsData[activeTab]);
+            }
+            // 3-SAHIFA: Minnatdorchilik
+            else if (currentPage === 2) {
+                pageContentEl.innerHTML = `
+                    <div class="smooth-box p-8 sm:p-10 text-center flex flex-col items-center justify-center min-h-[280px] space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-3xl shadow-md">
                             🤝
                         </div>
-                        <h2 class="text-xl font-bold text-white tracking-tight">E'tiboringiz uchun rahmat!</h2>
-                        <p class="text-sm text-slate-300 leading-relaxed">
+                        <h2 class="text-xl sm:text-2xl font-bold text-white">E'tiboringiz uchun rahmat!</h2>
+                        <p class="text-sm sm:text-base text-white/90 leading-relaxed max-w-md">
                             Vaqt ajratib tashrif buyurganingiz uchun samimiy minnatdorchilik bildiramiz. Kuningiz xayrli va barakali o'tsin!
                         </p>
                     </div>
                 `;
             }
 
-            // Pastki markaziy doirachalarni yangilash
-            dotsContainerEl.innerHTML = '';
-            pagesData.forEach((_, idx) => {
+            // Pastki 3 ta kichik doirachani yangilash
+            dotsWrapperEl.innerHTML = '';
+            for (let i = 0; i < totalPages; i++) {
                 const dot = document.createElement('button');
-                dot.setAttribute('aria-label', `${idx + 1}-sahifaga o'tish`);
-                const isActive = idx === currentPage;
-                dot.className = `h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                    isActive 
-                        ? 'w-7 bg-white shadow-[0_0_10px_rgba(255,255,255,0.85)]' 
-                        : 'w-2.5 bg-white/30 hover:bg-white/50'
+                dot.type = 'button';
+                dot.setAttribute('aria-label', `${i + 1}-sahifa`);
+                const isActive = i === currentPage;
+                dot.className = `w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                    isActive
+                        ? 'bg-white scale-125 shadow-[0_0_10px_rgba(255,255,255,0.9)]'
+                        : 'bg-white/35 hover:bg-white/55'
                 }`;
                 dot.addEventListener('click', () => {
-                    if (idx !== currentPage) {
-                        const dir = idx > currentPage ? 'next' : 'prev';
-                        currentPage = idx;
-                        renderPage(dir);
+                    if (i !== currentPage) {
+                        const dir = i > currentPage ? 'next' : 'prev';
+                        currentPage = i;
+                        renderCurrentPage(dir);
                     }
                 });
-                dotsContainerEl.appendChild(dot);
-            });
-
-            // Navigatsiya tugmalari sharti:
-            // 1-sahifada: faqat o'ngda
-            // 2-sahifada: ikkala tomonda
-            // 3-sahifada: faqat chapda
-            if (currentPage === 0) {
-                prevBtn.classList.add('invisible', 'pointer-events-none', 'opacity-0');
-            } else {
-                prevBtn.classList.remove('invisible', 'pointer-events-none', 'opacity-0');
+                dotsWrapperEl.appendChild(dot);
             }
 
-            if (currentPage === pagesData.length - 1) {
-                nextBtn.classList.add('invisible', 'pointer-events-none', 'opacity-0');
+            // Ko'rsatkich strelkalarini boshqarish:
+            // 1-sahifa: faqat o'ngda
+            // 2-sahifa: ikkala tarafda
+            // 3-sahifa: faqat chapda
+            if (currentPage === 0) {
+                btnPrev.classList.add('invisible', 'pointer-events-none', 'opacity-0');
             } else {
-                nextBtn.classList.remove('invisible', 'pointer-events-none', 'opacity-0');
+                btnPrev.classList.remove('invisible', 'pointer-events-none', 'opacity-0');
+            }
+
+            if (currentPage === totalPages - 1) {
+                btnNext.classList.add('invisible', 'pointer-events-none', 'opacity-0');
+            } else {
+                btnNext.classList.remove('invisible', 'pointer-events-none', 'opacity-0');
             }
         }
 
-        // Tugma hodisalari
-        prevBtn.addEventListener('click', () => {
+        // Tugmalar bosilganda
+        btnPrev.addEventListener('click', () => {
             if (currentPage > 0) {
                 currentPage--;
-                renderPage('prev');
+                renderCurrentPage('prev');
             }
         });
 
-        nextBtn.addEventListener('click', () => {
-            if (currentPage < pagesData.length - 1) {
+        btnNext.addEventListener('click', () => {
+            if (currentPage < totalPages - 1) {
                 currentPage++;
-                renderPage('next');
+                renderCurrentPage('next');
             }
         });
 
-        // Klaviatura strelkalari
+        // Klaviatura strelkalari bilan boshqarish
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' && currentPage < pagesData.length - 1) {
+            if (e.key === 'ArrowRight' && currentPage < totalPages - 1) {
                 currentPage++;
-                renderPage('next');
+                renderCurrentPage('next');
             } else if (e.key === 'ArrowLeft' && currentPage > 0) {
                 currentPage--;
-                renderPage('prev');
+                renderCurrentPage('prev');
             }
         });
 
-        // Barmoq bilan surish (Swipe)
-        let touchStartX = 0;
-        let touchEndX = 0;
+        // Mobil qurilmalarda barmoq bilan surish (Swipe)
+        let startX = 0;
+        let endX = 0;
 
-        appWrapper.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
+        appCard.addEventListener('touchstart', (e) => {
+            startX = e.changedTouches[0].screenX;
         }, { passive: true });
 
-        appWrapper.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
-
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0 && currentPage < pagesData.length - 1) {
+        appCard.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].screenX;
+            const diff = startX - endX;
+            if (Math.abs(diff) > 45) {
+                if (diff > 0 && currentPage < totalPages - 1) {
                     currentPage++;
-                    renderPage('next');
+                    renderCurrentPage('next');
                 } else if (diff < 0 && currentPage > 0) {
                     currentPage--;
-                    renderPage('prev');
+                    renderCurrentPage('prev');
                 }
             }
-        }
+        }, { passive: true });
 
-        // Ishga tushirish
+        // Sahifa yuklanganda ishga tushirish
         window.addEventListener('DOMContentLoaded', () => {
-            renderPage('none');
+            renderCurrentPage('none');
         });
     </script>
 </body>
